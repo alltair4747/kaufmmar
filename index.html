@@ -108,71 +108,53 @@
       border-radius: 0 8px 8px 0;
       margin-bottom: 20px;
     }
-    .step { display: none; }
-    .step.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <!-- ÚKOL 1 -->
-    <div id="step-1" class="step active">
-      <span class="badge">Stanoviště 1</span>
-      <h1>Úkol č. 1</h1>
-      <p>Sečtěte výšky pouze dvouslovných vrcholů, které lze zahlédnout severním směrem od rozhledny – výsledek zapište níže.</p>
-      <form onsubmit="handleCheck(event, 1)">
-        <div class="input-group">
-          <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-1" placeholder="Zadejte výsledek" autocomplete="off" autofocus>
-          <button type="submit">Ověřit odpověď</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- ÚKOL 2 -->
-    <div id="step-2" class="step">
-      <span class="badge">Stanoviště 2</span>
-      <h1>Úkol č. 2</h1>
-      <p>Kdysi v Jílovém až moc čmuchal jeden snaživej policajt. Připravte se, že jestli s vámi přijde nějaký problém, stane se vám podobná nehoda jak jemu. U rozhledny najdete jeho pomníček. Kolik by tomu policajtovi letos bylo? – výsledek zapište níže.</p>
-      <form onsubmit="handleCheck(event, 2)">
-        <div class="input-group">
-          <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-2" placeholder="Zadejte věk" autocomplete="off">
-          <button type="submit">Ověřit odpověď</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- CÍL -->
-    <div id="step-3" class="step">
-      <span class="badge" style="background: rgba(76,175,80,0.35);">Úspěch</span>
-      <h1>Správně!</h1>
-      <p>Doufám, že se teď už chápeme. Poslední test hledejte vzdušnou čarou 1,08 km tímto směrem:</p>
-      <div class="highlight-box">
-        <h2 style="color: var(--accent); font-size: 2rem; margin-bottom: 4px;">46°</h2>
-        <span style="font-size: 0.9rem; color: #a4b3a6;">Topografické a turistické značky</span>
+  <div class="card" id="card-content">
+    <span class="badge">Stanoviště 1</span>
+    <h1>Úkol č. 1</h1>
+    <p>Sečtěte výšky pouze dvouslovných vrcholů, které lze zahlédnout severním směrem od rozhledny – výsledek zapište níže.</p>
+    <form onsubmit="handleCheck(event, 1)">
+      <div class="input-group">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-1" placeholder="Zadejte výsledek" autocomplete="off" autofocus>
+        <button type="submit">Ověřit odpověď</button>
       </div>
-      <p style="font-weight: 500; color: #fff;">Řekněte na místě, že byste rádi jednu lahev Panoptika.</p>
-    </div>
+    </form>
   </div>
 
   <script>
-    // SHA-256 hashe odpovědí (896 a 44)
-    const HASH_1 = "e26466f8ba6a4e320f782c5d15cb6fa3e8787f174a72d4eb7254580665f84dca"; // 896
-    const HASH_2 = "9a1158154dfa42caddbd0694a4e9bdc8ee3e2f5b5f88fc91c28c86d88f01b333"; // 44
+    const H1 = "62f6d46c48c7d9ff3d09a408d0ec880f167a5dc9c8fd343a4e56e96318349583";
+    const H2 = "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6";
+    const D2 = "BEpGWVcWW1VXS0oLGltXXF5TGgdlTFhYV09f/ZhC/KIWCgUZS0lXVgc8BFEHBvqsU1ZaGP27FhkEBBZeCQc8BEkIc11PS1AWThl8+5RaV0/1kVQWWfyIGFRZWxnytVRDW1FXVBlcXV1TVhlFVljzhlBAXVMWSFZaUVpXUk0YGGnzoVBGSlhATFwWS1waGPyIXRlcXUpCVFAWSxlA+5hbURlG/aBfUl1TGFfyo1NXU/qLGElEV1ta+5BbFBlFTFhYXRlFXRlA+5hbGElZXFZUVvqXGFdTUFZSWRlcWVIWUlxbTRcWbRlEV0NeVFxSVkAWVlhcXFxCXRlcXVFZGElZVVf1lf27XVIYGHJZVFBdGFtPGE1ZVUwWSFZaUVpXUk1ZTlAWVFxCV0oWWkBaVwYW2rmlGE/1hUpaXV1TUxlMWUlf/ZhCXRlY+5TzhlwYBBZGBjMKXlZEVRlZVkpDWlRfTAQUUFhYXFVTe1FTW1IeXU9TVk0aGAsfGgc8GBkKXFBAGFpaWUpFBRtfVklDTBRRSlZDSBsIMhkWGBkKUVdGTU0WTEBGXQQUTFxaGhlfVklDTFRZXFwLGldDVVxEUVoUGElXTE1TSlcLGmIGFQBrEhsWUV0LGlBYSExCFQsUGElaWVpTUFZaXFxEBRtsWV1TUk1TGE/yo1IUGFhDTFZVV1RGVFxCXQQUV19QGhlXTU1ZXlZVTUoIMhkWGBkKWkxCTFZYGE1PSFwLGkpDWlRfTBsId0/yo/yvUU0WV11GV0/yo/25BBZUTU1CV1cIMhkWBBZSUU8IMgUZXlZEVQc=";
+    const D3 = "CEdEVVoUV1hVR0cJFlZVUFNRFhRHQE1YUQkWVlVXX1NGW0FaUA4URlNWVRwDAhgFAwEYDAQYBBoHAR0PFgr3rkdE8K9XXAgbR0RVWgo+CFwFCmdERveVQlrwrxUIG1wFCj4IRApwW0FS95VZGBTxilEUR1EUQFHwuxRB8YoUV1z3lURRWVEaFGRbR1hRUFr3mRRAUUdAFFxYUVBRXkBRFEJOUEHxlVpbQRTwuVVGW0EUBRgEDBRfWRRA95lZQFsUR1nwr0ZRWQ4IG0QKPghQXUIUV1hVR0cJFlxdU1xYXVNcQBlWW0wWCj4UFAhcBhRHQE1YUQkWV1tYW0YOFEJVRhwZGVVXV1FaQB0PFFJbWkAZR11OUQ4UBkZRWQ8UWVVGU11aGVZbQEBbWQ4UAERMDxYKAAL2hAgbXAYKPhQUCEdEVVoUR0BNWFEJFlJbWkAZQ1FdU1xADhQBBAQPFFdbWFtGDhQXUlJSDxYK8axRX1rwr0BRFFpVFFn3mUdA8K8YFPGKURRWTUdAURRG95VQXRReUVBaQRRYVVxRQhRkVVpbREBdX1UaCBtECg==";
 
     async function sha256(str) {
       const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
+    function decrypt(b64, key) {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) {
+        bytes[i] = bin.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+      }
+      return new TextDecoder().decode(bytes);
+    }
+
     async function handleCheck(e, stepNum) {
       e.preventDefault();
-      const input = document.getElementById(`input-${stepNum}`);
+      const input = document.getElementById('input-' + stepNum);
       const val = input.value.replace(/\s+/g, '');
       const hash = await sha256(val);
 
-      if (stepNum === 1 && hash === HASH_1) {
-        goToStep(2);
-      } else if (stepNum === 2 && hash === HASH_2) {
-        goToStep(3);
+      if (stepNum === 1 && hash === H1) {
+        document.getElementById('card-content').innerHTML = decrypt(D2, val);
+        const next = document.getElementById('input-2');
+        if (next) next.focus();
+      } else if (stepNum === 2 && hash === H2) {
+        document.getElementById('card-content').innerHTML = decrypt(D3, val);
       } else {
         input.classList.add('shake');
         setTimeout(() => {
@@ -181,14 +163,6 @@
           input.focus();
         }, 450);
       }
-    }
-
-    function goToStep(num) {
-      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-      const next = document.getElementById(`step-${num}`);
-      next.classList.add('active');
-      const nextInput = next.querySelector('input');
-      if (nextInput) nextInput.focus();
     }
   </script>
 </body>
